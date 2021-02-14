@@ -8,7 +8,7 @@ on:
 
 jobs:
   ssh:
-    runs-on: ubuntu-20.04
+    runs-on: windows-latest
 
     env:
       # Change These If You Are Forking The Repo
