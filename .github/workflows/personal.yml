@@ -8,7 +8,7 @@ on:
 
 jobs:
   ssh:
-    runs-on: macos-latest
+    runs-on: ubuntu-20.04
 
     env:
       # Change These If You Are Forking The Repo
