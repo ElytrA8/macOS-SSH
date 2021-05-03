@@ -12,7 +12,6 @@ jobs:
 
     env:
       # Change These If You Are Forking The Repo
-      GitHubMail: "manofuranium@gmail.com"
       GitHubName: "ElytrA8"
 
     steps:
@@ -37,9 +36,4 @@ jobs:
 
     - name: Self Looping
       run: |
-        git clone https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} loop
-        cd loop || exit 1
-        echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
-        git add looper.txt
-        git commit -m "Looping at $(date -u +%D-%T%P)"
-        git push -q https://${{ secrets.GH_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:main
+        curl -X POST --header "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/personal.yml/dispatches -d '{"ref":"main"}'
