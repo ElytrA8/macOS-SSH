@@ -1,4 +1,4 @@
-name: personal
+name: personal-mac
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   ssh:
-    runs-on: ubuntu-20.04
+    runs-on: macos-10.05
 
     env:
       # Change These If You Are Forking The Repo
@@ -25,7 +25,7 @@ jobs:
         mode: ngrok
       env:
         # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-        NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+        NGROK_TOKEN: ${{ secrets.NGROK_TOKEN1 }}
         # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
         NGROK_REGION: us
         # This password you will use when authorizing via SSH
@@ -36,4 +36,4 @@ jobs:
 
     - name: Self Looping
       run: |
-        curl -X POST --header "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/personal.yml/dispatches -d '{"ref":"main"}'
+        curl -X POST --header "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/personal.yml/dispatches -d '{"ref":"mac"}'
