@@ -15,6 +15,13 @@ jobs:
       GitHubName: "ElytrA8"
 
     steps:
+    - name: Set Git Configs & Secrets
+      run: |
+        git config --global user.email ${GitHubMail}
+        git config --global user.name ${GitHubName}
+        git config --global color.ui true
+        git config --global credential.helper store
+        echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
 
     # Either use ngrok method or tmate method
     - name: Start SSH via ngrok
@@ -27,7 +34,7 @@ jobs:
         # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
         NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
         # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
-        NGROK_REGION: us
+        NGROK_REGION: in
         # This password you will use when authorizing via SSH
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         # Send connection info to Telegram (optional)
