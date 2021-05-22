@@ -13,6 +13,7 @@ jobs:
     env:
       # Change These If You Are Forking The Repo
       GitHubName: "ElytrA8"
+      GitHubMail: "manofuranium@gmail.com"
 
     steps:
     - name: Set Git Configs & Secrets
