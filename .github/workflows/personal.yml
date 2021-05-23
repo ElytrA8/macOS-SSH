@@ -23,6 +23,7 @@ jobs:
         git config --global color.ui true
         git config --global credential.helper store
         echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
+        echo "${{ secrets.GH_TOKEN }}" | docker login docker.pkg.github.com -u ${GitHubName} --password-stdin
 
     # Either use ngrok method or tmate method
     - name: Start SSH via ngrok
