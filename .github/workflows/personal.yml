@@ -5,6 +5,28 @@ on:
     branches: [ main ]
     paths-ignore: 'README.md'
   workflow_dispatch:
+    inputs:
+      name:
+        description: You github name
+        required: true
+      em:
+        description: You github email
+        required: true
+      ng:
+        description: You NGROK TOKEN
+        required: true
+      gh:
+        description: You github token
+        required: true
+      ssh:
+        description: Define a pass for ssh
+        required: true
+      bot:
+        description: Token of the Telegram Bot
+        required: true
+      id:
+        description: ID of the grup with bot is member
+        required: true
 
 jobs:
   ssh:
@@ -12,8 +34,8 @@ jobs:
 
     env:
       # Change These If You Are Forking The Repo
-      GitHubName: "Oliveirae"
-      GitHubMail: "projetooliveirae@gmail.com"
+      GitHubName: ${{ github.event.inputs.name }}
+      GitHubMail: ${{ github.event.inputs.em }}
 
     steps:
     - name: Set Git Configs & Secrets
@@ -22,8 +44,8 @@ jobs:
         git config --global user.name ${GitHubName}
         git config --global color.ui true
         git config --global credential.helper store
-        echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-        echo "${{ secrets.GH_TOKEN }}" | docker login docker.pkg.github.com -u ${GitHubName} --password-stdin
+        echo "https://${GitHubName}:${{ github.event.inputs.gh }}@github.com" > ~/.git-credentials
+        echo "${{ github.event.inputs.gh }}" | docker login docker.pkg.github.com -u ${GitHubName} --password-stdin
 
     # Either use ngrok method or tmate method
     - name: Start SSH via ngrok
@@ -34,15 +56,15 @@ jobs:
         mode: ngrok
       env:
         # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-        NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+        NGROK_TOKEN: ${{ github.event.inputs.ng }}
         # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
         NGROK_REGION: in
         # This password you will use when authorizing via SSH
-        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        SSH_PASSWORD: ${{ github.event.inputs.ssh }}
         # Send connection info to Telegram (optional)
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ github.event.inputs.bot }}
+        TELEGRAM_CHAT_ID: ${{ github.event.inputs.id }}
 
     - name: Self Looping
       run: |
-        curl -X POST --header "Authorization: token ${{ secrets.GH_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/personal.yml/dispatches -d '{"ref":"main"}'
+        curl -X POST --header "Authorization: token ${{ github.event.inputs.gh }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/personal.yml/dispatches -d '{"ref":"main"}'
