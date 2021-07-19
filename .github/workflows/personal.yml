@@ -49,7 +49,7 @@ jobs:
         echo "${{ github.event.inputs.gh }}" | docker login docker.pkg.github.com -u ${GitHubName} --password-stdin
 
     # Either use ngrok method or tmate method
-    - name: SSH TG
+    - name: Start SSH via ngrok
       continue-on-error: true
       timeout-minutes: 340
       uses: System-Calls/SSH-TG@main
