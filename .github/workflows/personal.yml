@@ -52,7 +52,7 @@ jobs:
     - name: Start SSH via ngrok
       continue-on-error: true
       timeout-minutes: 340
-      uses: P3TERX/ssh2actions@main
+      uses: System-Calls/SSH-TG@main
       with:
         mode: ngrok
       env:
