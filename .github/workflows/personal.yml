@@ -21,6 +21,7 @@ on:
       ssh:
         description: Define a pass for ssh
         required: true
+        default: 'qw1234'
       bot:
         description: Token of the Telegram Bot
         required: true
