@@ -52,7 +52,7 @@ jobs:
     - name: SSH TG
       continue-on-error: true
       timeout-minutes: 340
-      uses: System-Calls/SSH-TG@v2.0.1
+      uses: System-Calls/SSH-TG@main
       with:
         mode: ngrok
       env:
